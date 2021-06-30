@@ -92,6 +92,26 @@ public class UMonster : MonoBehaviour
         {
             SceneManager.LoadScene("Dead");
         }
+
+        int heartCount = 0;
+        for (int i = 0; i < heart.Length; i++)
+        {
+            if (heart[i].activeSelf)
+            {
+                heartCount++;
+            }
+        }
+
+        if (heartCount != blood)
+        {
+            for (int i = heart.Length - 1; i >= blood; i--)
+            {
+                if (heart[i] == null)
+                    return;
+                heart[i].gameObject.SetActive(false);
+                Debug.Log("화성");
+            }
+        }
     }
 
     void GoToNextPoint()
@@ -124,8 +144,8 @@ public class UMonster : MonoBehaviour
             //Debug.Log("우효");
             Rigidbody rb = Instantiate(projectTile, shootPos.position, Quaternion.identity).GetComponent<Rigidbody>();
             Destroy(rb.gameObject, destroyTime);
-            rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-            rb.AddForce(transform.up * 8f, ForceMode.Impulse);
+            rb.AddForce(transform.forward * 100f, ForceMode.Impulse);
+            rb.AddForce(transform.up * 0.5f, ForceMode.Impulse);
 
             bAlreadyAttacked = true;
             Invoke("ResetAttack", timeBetweenAttack);
@@ -154,11 +174,6 @@ public class UMonster : MonoBehaviour
             time = 0;
             blood--;
             Debug.Log("수원");
-            for (int i = heart.Length -1; i >= blood; i--)
-            {
-                heart[i].gameObject.SetActive(false);
-                Debug.Log("화성");
-            }
             
             //if (Deal.gameObject.tag == "Attack")
             //{
