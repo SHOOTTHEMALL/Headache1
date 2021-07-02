@@ -45,6 +45,10 @@ public class Player : MonoBehaviour
 
     public int clear = 0;
 
+    public AudioClip cute;
+
+    AudioSource audiosource;
+
     private void Awake()
     {
         playerController = GetComponent<CharacterController>();
@@ -60,6 +64,8 @@ public class Player : MonoBehaviour
         currentRot = 0f;
 
         run = GetComponentInChildren<Animator>();
+
+         this.audiosource = gameObject.AddComponent<AudioSource>();
 
         run.SetBool("IsRun", false);
 
@@ -144,31 +150,9 @@ public class Player : MonoBehaviour
         {
             clear++;
             Debug.Log(clear);
-            Destroy(Chick[0].gameObject);
-        }
-        else if (hit.gameObject.tag == "Chickk")
-        {
-            clear++;
-            Debug.Log(clear);
-            Destroy(Chick[1].gameObject);
-        }
-        else if (hit.gameObject.tag == "Chickkk")
-        {
-            clear++;
-            Debug.Log(clear);
-            Destroy(Chick[2].gameObject);
-        }
-        else if (hit.gameObject.tag == "Chickkkk")
-        {
-            clear++;
-            Debug.Log(clear);
-            Destroy(Chick[3].gameObject);
-        }
-        else if (hit.gameObject.tag == "Chickkkkk")
-        {
-            clear++;
-            Debug.Log(clear);
-            Destroy(Chick[4].gameObject);
+            Destroy(hit.gameObject);
+            audiosource.clip = cute;
+            audiosource.Play();
         }
 
         if(hit.gameObject.tag == "LostTime")
